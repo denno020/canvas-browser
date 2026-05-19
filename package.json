@@ -1,0 +1,16 @@
+{
+  "name": "canvas-browser",
+  "version": "0.0.1",
+  "description": "An Infinite Canvas Web Browser experiment",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^30.0.1"
+  }
+}

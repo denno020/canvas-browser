@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spatial Canvas Browser</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Fonts for beautiful typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Viewport container -->
+  <div id="canvas-container">
+    <!-- Infinite Canvas -->
+    <div id="canvas">
+      <!-- SVG Canvas for connections -->
+      <svg id="svg-connections" width="50000" height="50000" viewBox="0 0 50000 50000">
+        <!-- SVG filters for glowing lines -->
+        <defs>
+          <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#8b5cf6" />
+            <stop offset="100%" stop-color="#06b6d4" />
+          </linearGradient>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+      </svg>
+      
+      <!-- Windows will be dynamically generated here -->
+    </div>
+  </div>
+
+  <!-- HUD Control Panel -->
+  <div id="hud">
+    <div class="hud-title">Spatial Browser</div>
+    <div class="hud-stats">
+      <div class="hud-stat-item">
+        <span class="label">Zoom:</span> <span id="zoom-level">100%</span>
+      </div>
+      <div class="hud-stat-item">
+        <span class="label">Windows:</span> <span id="window-count">0</span>
+      </div>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-controls">
+      <button id="btn-fit-all" title="Fit All Windows in Viewport">Fits All</button>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-settings">
+      <div class="hud-settings-title">Default Node Size</div>
+      <select id="default-size-select" class="preset-select" style="width: 100%; margin-right: 0; margin-top: 4px;">
+        <option value="dynamic">📐 Dynamic (80% Height)</option>
+        <option value="600x600">Compact Square (600×600)</option>
+        <option value="800x800">Standard Square (800×800)</option>
+        <option value="1000x1000">Large Square (1000×1000)</option>
+        <option value="390x844">Mobile Portrait (390×844)</option>
+        <option value="600x1000">Narrow Column (600×1000)</option>
+        <option value="800x1200">Wide Column (800×1200)</option>
+        <option value="1000x1500">Tall Reader (1000×1500)</option>
+      </select>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-instructions">
+      <div><span class="key">Space + Drag</span> or <span class="key">Middle Click</span> to Pan</div>
+      <div><span class="key">Scroll</span> to Zoom</div>
+      <div><span class="key">Drag Title Bar</span> to Move Windows</div>
+      <div><span class="key">Click Link</span> opens child window</div>
+      <div style="height: 1px; background: rgba(255, 255, 255, 0.06); margin: 4px 0;"></div>
+      <div><span class="key">Cmd/Ctrl + T</span> New Node</div>
+      <div><span class="key">Cmd/Ctrl + Shift + T</span> Reopen Closed Node</div>
+    </div>
+  </div>
+
+  <!-- Custom Context Menu -->
+  <div id="custom-context-menu" class="context-menu" style="display: none;">
+    <!-- Window Options -->
+    <div class="menu-group-window">
+      <div class="context-menu-item" id="menu-fit">
+        <span>⛶</span> Zoom to Fit Node
+      </div>
+      <div class="context-menu-divider"></div>
+      <div class="context-menu-item" id="menu-close">
+        <span>✕</span> Close Node
+      </div>
+      <div class="context-menu-item danger" id="menu-close-branch">
+        <span>🌿</span> Close Branch (Tree)
+      </div>
+      <div class="context-menu-item danger" id="menu-close-descendants">
+        <span>🍂</span> Close Children Nodes
+      </div>
+    </div>
+    
+    <!-- Canvas Options -->
+    <div class="menu-group-canvas">
+      <div class="context-menu-item" id="menu-canvas-new">
+        <span>➕</span> New Node
+      </div>
+      <div class="context-menu-item" id="menu-canvas-reopen">
+        <span>⏳</span> Reopen Closed Node
+      </div>
+      <div class="context-menu-item" id="menu-canvas-fit-all">
+        <span>⛶</span> Fit All Nodes
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
